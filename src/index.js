@@ -22,7 +22,8 @@ function addCanvas() {
 
   ctx = canvas.getContext("2d");
   ctx.font = "30px Arial";
-  ctx.fillText("Loading...", 10, 50)
+  ctx.textAlign = "center"
+  ctx.fillText("Loading...", 250, 50)
 }
 
 function addSaveButton() {
@@ -47,8 +48,37 @@ function displayImages() {
   images.forEach(({image,left,top})=>ctx.drawImage(image, left, top))
 }
 
+function displayText() {
+  const quoteChunks = []
+  let c = 0
+  let j = 0
+
+  for(let i = 0; i < quoteText.length; i++) {
+    c++
+    if (c > 20 && quoteText[i] === ' ') {
+      quoteChunks.push(quoteText.slice(j, i))
+      j = i
+      c = 0
+    }
+  }
+
+  quoteChunks.push(quoteText.slice(j))
+  
+  console.log(quoteChunks, quoteText)
+
+  ctx.fillStyle = "#ffffff"
+  // ctx.fillText(quoteText, 10, 50)
+  const chunksCount = quoteChunks.length
+
+  for (let i = 0; i< chunksCount; i++){
+    ctx.fillText(quoteChunks[i], 250, 250 + (40* (i-chunksCount/2)))
+  }
+}
+
 function displayContent() {
+  ctx.clearRect(0,0,500,500)
   displayImages()
+  displayText()
 }
 
 function generateImage(width, height, left, top) {
