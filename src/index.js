@@ -1,5 +1,5 @@
 const UNSPLASH_COLLECTION_URL =
-  "https://source.unsplash.com/collection/1127163/";
+  "https://source.unsplash.com/collection/1065412/";
 
 let totalImagesCount
 
@@ -23,6 +23,8 @@ function addCanvas() {
   ctx = canvas.getContext("2d");
   ctx.font = "30px Arial";
   ctx.textAlign = "center"
+  ctx.filter = 'grayscale(35%)'
+  
   ctx.fillText("Loading...", 250, 50)
 }
 
@@ -49,6 +51,7 @@ function displayImages() {
 }
 
 function displayText() {
+  ctx.filter = ''
   const quoteChunks = []
   let c = 0
   let j = 0
@@ -67,11 +70,22 @@ function displayText() {
   console.log(quoteChunks, quoteText)
 
   ctx.fillStyle = "#ffffff"
-  // ctx.fillText(quoteText, 10, 50)
+  // ctx.lineWidth = 3
+  // // ctx.font = "italic bold 25pt Tahoma"
+
   const chunksCount = quoteChunks.length
 
   for (let i = 0; i< chunksCount; i++){
+
+    ctx.shadowColor="black";
+    ctx.shadowBlur=7;
+    ctx.lineWidth=5;
+    ctx.strokeText(quoteChunks[i], 250, 250 + (40* (i-chunksCount/2)))
+    ctx.shadowBlur=0;
+    ctx.fillStyle="white";
+
     ctx.fillText(quoteChunks[i], 250, 250 + (40* (i-chunksCount/2)))
+    // ctx.strokeText(quoteChunks[i], 250, 250 + (40* (i-chunksCount/2)))
   }
 }
 
@@ -130,7 +144,7 @@ async function generateText() {
   )
 
   const [{quote}] = await response.json()
-  quoteText = quote
+  quoteText = quote.replace(/\.\.\./g, ' ')
   quoteIsLoaded = true 
 
   if (imagesAreLoaded) {
