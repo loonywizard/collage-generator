@@ -6,6 +6,9 @@ const totalImagesCount = 4
 let canvas;
 let ctx;
 let saveButton;
+let quoteText
+let quoteIsLoaded = false
+let imagesAreLoaded = false
 let loadedImagesCount = 0
 
 const images = []
@@ -42,6 +45,10 @@ function displayImages() {
   images.forEach(({image,left,top})=>ctx.drawImage(image, left, top))
 }
 
+function displayContent() {
+  displayImages()
+}
+
 function generateImage(width, height, left, top) {
   const image = new Image();
 
@@ -50,9 +57,11 @@ function generateImage(width, height, left, top) {
   image.onload = () => {
     images.push({ image, left, top })
     loadedImagesCount++
+
+    imagesAreLoaded = loadedImagesCount === totalImagesCount
     
-    if (loadedImagesCount === totalImagesCount) {
-      displayImages()
+    if (imagesAreLoaded && quoteIsLoaded) {
+      displayContent()
     }
   };
 }
@@ -64,7 +73,19 @@ function generateImageCollage() {
   generateImage(300, 300, 200, 200);
 }
 
-function generateText() {}
+async function generateText() {
+  const response = await fetch(
+    'https://thesimpsonsquoteapi.glitch.me/quotes'
+  )
+
+  const [{quote}] = await response.json()
+  quoteText = quote
+  quoteIsLoaded = true 
+
+  if (imagesAreLoaded) {
+    displayContent()
+  }
+}
 
 function generateCanvasContent() {
   generateImageCollage();
