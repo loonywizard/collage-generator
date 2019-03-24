@@ -1,7 +1,7 @@
 const UNSPLASH_COLLECTION_URL =
   "https://source.unsplash.com/collection/1127163/";
 
-const totalImagesCount = 4
+let totalImagesCount
 
 let canvas;
 let ctx;
@@ -101,10 +101,27 @@ function generateImage(width, height, left, top) {
 }
 
 function generateImageCollage() {
-  generateImage(300, 200, 0, 0);
-  generateImage(200, 200, 300, 0);
-  generateImage(200, 300, 0, 200);
-  generateImage(300, 300, 200, 200);
+  const randomNumber = Math.random() * 3
+  
+  if (randomNumber <= 1) {
+    totalImagesCount = 4
+    generateImage(300, 200, 0, 0);
+    generateImage(200, 200, 300, 0);
+    generateImage(200, 300, 0, 200);
+    generateImage(300, 300, 200, 200);
+  } else if (randomNumber <= 2) {
+    totalImagesCount = 3
+    generateImage(500, 300, 0, 0);
+    generateImage(200, 200, 0, 300);
+    generateImage(300, 200, 200, 300);
+  } else {
+    totalImagesCount = 5
+    generateImage(100, 150, 0, 0);
+    generateImage(140, 150, 100, 0);
+    generateImage(260, 150, 240, 0);
+    generateImage(200, 350, 0, 150);
+    generateImage(300, 350, 200, 150);
+  } 
 }
 
 async function generateText() {
