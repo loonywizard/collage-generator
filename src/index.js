@@ -1,9 +1,35 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-const saveButton = document.getElementById("save");
+let canvas; //= document.getElementById("canvas");
+let ctx; //= canvas.getContext("2d");
+let saveButton; //= document.getElementById("save");
 
 const UNSPLASH_COLLECTION_URL =
   "https://source.unsplash.com/collection/1127163/";
+
+/**
+ * <canvas id="canvas" width="500" height="500"></canvas>
+    <button id="save">Save image</button
+ * 
+ */
+function addCanvas() {
+  canvas = document.createElement("canvas");
+  canvas.width = 500;
+  canvas.height = 500;
+  document.body.appendChild(canvas);
+
+  ctx = canvas.getContext("2d");
+}
+
+function addSaveButton() {
+  saveButton = document.createElement("button");
+  saveButton.innerHTML = "Save image";
+
+  document.body.appendChild(saveButton);
+}
+
+function generateBasicHTML() {
+  addCanvas();
+  addSaveButton();
+}
 
 function downloadImage() {
   console.log("downloadImage");
@@ -33,6 +59,7 @@ function generateCanvasContent() {
   generateText();
 }
 
-saveButton.addEventListener("click", downloadImage);
-
+generateBasicHTML();
 generateCanvasContent();
+
+saveButton.addEventListener("click", downloadImage);
