@@ -1,15 +1,10 @@
-let canvas; //= document.getElementById("canvas");
-let ctx; //= canvas.getContext("2d");
-let saveButton; //= document.getElementById("save");
-
 const UNSPLASH_COLLECTION_URL =
   "https://source.unsplash.com/collection/1127163/";
 
-/**
- * <canvas id="canvas" width="500" height="500"></canvas>
-    <button id="save">Save image</button
- * 
- */
+let canvas;
+let ctx;
+let saveButton;
+console.log("begin");
 function addCanvas() {
   canvas = document.createElement("canvas");
   canvas.width = 500;
@@ -39,8 +34,9 @@ function generateImage(width, height, left, top) {
   const image = new Image();
 
   image.src = `${UNSPLASH_COLLECTION_URL}${width}x${height}`;
-
+  console.log(image.src);
   image.onload = () => {
+    console.log("onload");
     ctx.drawImage(image, left, top);
   };
 }
