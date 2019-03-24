@@ -26,7 +26,8 @@ function addCanvas() {
 }
 
 function addSaveButton() {
-  saveButton = document.createElement("button");
+  saveButton = document.createElement("a");
+  saveButton.download = "web3.jpg"
   saveButton.innerHTML = "Save image";
 
   document.body.appendChild(saveButton);
@@ -38,7 +39,8 @@ function generateBasicHTML() {
 }
 
 function downloadImage() {
-  console.log("downloadImage");
+  const image = canvas.toDataURL("image/jpg")
+  saveButton.href=image
 }
 
 function displayImages() {
@@ -51,6 +53,8 @@ function displayContent() {
 
 function generateImage(width, height, left, top) {
   const image = new Image();
+
+  image.crossOrigin = 'anonymous'
 
   image.src = `${UNSPLASH_COLLECTION_URL}${width}x${height}`;
   
