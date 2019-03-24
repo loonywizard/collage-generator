@@ -1,17 +1,25 @@
 const UNSPLASH_COLLECTION_URL =
   "https://source.unsplash.com/collection/1127163/";
 
+const totalImagesCount = 4
+
 let canvas;
 let ctx;
 let saveButton;
-console.log("begin");
+let loadedImagesCount = 0
+
+const images = []
+
 function addCanvas() {
   canvas = document.createElement("canvas");
   canvas.width = 500;
   canvas.height = 500;
+  
   document.body.appendChild(canvas);
 
   ctx = canvas.getContext("2d");
+  ctx.font = "30px Arial";
+  ctx.fillText("Loading...", 10, 50)
 }
 
 function addSaveButton() {
@@ -30,14 +38,22 @@ function downloadImage() {
   console.log("downloadImage");
 }
 
+function displayImages() {
+  images.forEach(({image,left,top})=>ctx.drawImage(image, left, top))
+}
+
 function generateImage(width, height, left, top) {
   const image = new Image();
 
   image.src = `${UNSPLASH_COLLECTION_URL}${width}x${height}`;
-  console.log(image.src);
+  
   image.onload = () => {
-    console.log("onload");
-    ctx.drawImage(image, left, top);
+    images.push({ image, left, top })
+    loadedImagesCount++
+    
+    if (loadedImagesCount === totalImagesCount) {
+      displayImages()
+    }
   };
 }
 
@@ -55,7 +71,9 @@ function generateCanvasContent() {
   generateText();
 }
 
-generateBasicHTML();
-generateCanvasContent();
+window.onload = () => {
+  generateBasicHTML();
+  generateCanvasContent();
 
-saveButton.addEventListener("click", downloadImage);
+  saveButton.addEventListener("click", downloadImage);
+}
