@@ -70,8 +70,6 @@ function displayText() {
   console.log(quoteChunks, quoteText)
 
   ctx.fillStyle = "#ffffff"
-  // ctx.lineWidth = 3
-  // // ctx.font = "italic bold 25pt Tahoma"
 
   const chunksCount = quoteChunks.length
 
@@ -79,13 +77,12 @@ function displayText() {
 
     ctx.shadowColor="black";
     ctx.shadowBlur=7;
-    ctx.lineWidth=5;
+    ctx.lineWidth=3;
     ctx.strokeText(quoteChunks[i], 250, 250 + (40* (i-chunksCount/2)))
     ctx.shadowBlur=0;
     ctx.fillStyle="white";
 
     ctx.fillText(quoteChunks[i], 250, 250 + (40* (i-chunksCount/2)))
-    // ctx.strokeText(quoteChunks[i], 250, 250 + (40* (i-chunksCount/2)))
   }
 }
 
